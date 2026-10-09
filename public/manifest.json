@@ -1,0 +1,42 @@
+{
+  "name": "GestionLocative Pro - Gestion Immobilière",
+  "short_name": "GestionLocative",
+  "description": "Application PWA moderne de gestion locative, suivi des loyers, créances, dépenses et rentabilité.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Tableau de Bord",
+      "url": "/?tab=dashboard",
+      "description": "Accéder aux statistiques clés"
+    },
+    {
+      "name": "Nouveau Paiement",
+      "url": "/?tab=paiements&action=new",
+      "description": "Enregistrer un paiement de loyer"
+    },
+    {
+      "name": "Locataires",
+      "url": "/?tab=locataires",
+      "description": "Voir la liste des locataires"
+    }
+  ],
+  "categories": ["business", "finance", "productivity"]
+}
