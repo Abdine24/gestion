@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { Paiement, Locataire, Maison, ProprietaireSettings, MoyenPaiement, StatutPaiement } from '@/types';
 import { formatMonnaie, genererQuittancePDF } from '@/lib/pdfGenerator';
+import { sendReceiptEmail } from '@/lib/emailService';
 
 interface PaiementsViewProps {
   paiements: Paiement[];
@@ -112,27 +113,23 @@ export default function PaiementsView({
   const handleSendEmailReceipt = async (p: Paiement, loc: Locataire) => {
     setEmailStatus({ id: p.id, message: 'Envoi en cours...', ok: true });
     try {
-      const res = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: loc.telephone ? `${loc.nom.toLowerCase()}@client.com` : 'locataire@client.com',
-          subject: `Quittance de loyer - ${p.mois} ${p.annee} (${settings.nom_agence || settings.nom_bailleur})`,
-          html: `
-            <h2>Quittance de Loyer - ${p.mois} ${p.annee}</h2>
-            <p>Bonjour ${loc.prenom} ${loc.nom},</p>
-            <p>Nous vous confirmons la bonne réception de votre paiement de <strong>${formatMonnaie(p.montant, settings.devise)}</strong> pour le loyer de ${p.mois} ${p.annee}.</p>
-            <p>Mode de règlement : ${p.moyen_paiement.toUpperCase()}</p>
-            <p>Date : ${p.date_paiement}</p>
-            <br/>
-            <p>Cordialement,<br/><strong>${settings.nom_bailleur}</strong><br/>${settings.nom_agence}</p>
-          `,
-          apiKey: settings.resend_api_key
-        })
+      const data = await sendReceiptEmail({
+        to: loc.telephone ? `${loc.nom.toLowerCase()}@client.com` : 'locataire@client.com',
+        subject: `Quittance de loyer - ${p.mois} ${p.annee} (${settings.nom_agence || settings.nom_bailleur})`,
+        html: `
+          <h2>Quittance de Loyer - ${p.mois} ${p.annee}</h2>
+          <p>Bonjour ${loc.prenom} ${loc.nom},</p>
+          <p>Nous vous confirmons la bonne réception de votre paiement de <strong>${formatMonnaie(p.montant, settings.devise)}</strong> pour le loyer de ${p.mois} ${p.annee}.</p>
+          <p>Mode de règlement : ${p.moyen_paiement.toUpperCase()}</p>
+          <p>Date : ${p.date_paiement}</p>
+          <br/>
+          <p>Cordialement,<br/><strong>${settings.nom_bailleur}</strong><br/>${settings.nom_agence}</p>
+        `,
+        apiKey: settings.resend_api_key
       });
-      const data = await res.json();
+
       if (data.success) {
-        setEmailStatus({ id: p.id, message: 'Quittance envoyée par email !', ok: true });
+        setEmailStatus({ id: p.id, message: data.message || 'Quittance envoyée par email !', ok: true });
       } else {
         setEmailStatus({ id: p.id, message: 'Erreur envoi email', ok: false });
       }
