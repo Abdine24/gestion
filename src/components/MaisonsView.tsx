@@ -116,11 +116,11 @@ export default function MaisonsView({
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
             Biens Immobiliers
             <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-800 text-sky-400 border border-slate-700">
-              {maisons.length} logements
+              {maisons.length} logements • {settings.ville}
             </span>
           </h1>
           <p className="text-slate-400 text-sm mt-1">
-            Gérez votre parc immobilier, suivez l&apos;état des locations et la rentabilité par bien.
+            Gérez votre parc immobilier situé exclusivement à {settings.ville}, suivez l&apos;état des locations et la rentabilité par bien.
           </p>
         </div>
 

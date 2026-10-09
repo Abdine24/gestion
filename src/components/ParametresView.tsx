@@ -142,13 +142,20 @@ export default function ParametresView({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">Ville et Pays</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">
+                Ville unique d&apos;exploitation immobilière *
+              </label>
               <input
                 type="text"
+                required
                 value={formData.ville}
                 onChange={(e) => setFormData({ ...formData, ville: e.target.value })}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-sky-500"
+                placeholder="Ex: Abidjan, Côte d'Ivoire"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-sky-500 font-semibold text-sky-400"
               />
+              <p className="text-[10px] text-slate-400 mt-1">
+                L&apos;application est configurée pour opérer exclusivement sur cette ville unique.
+              </p>
             </div>
           </div>
         </div>

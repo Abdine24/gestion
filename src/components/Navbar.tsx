@@ -10,7 +10,8 @@ import {
   X, 
   Download,
   AlertTriangle,
-  Smartphone
+  Smartphone,
+  MapPin
 } from 'lucide-react';
 import { ProprietaireSettings } from '@/types';
 import { isSupabaseConfigured } from '@/lib/supabase';
@@ -71,6 +72,12 @@ export default function Navbar({
         {/* Right Action Items */}
         <div className="flex items-center gap-2 sm:gap-3">
           
+          {/* Single City Badge */}
+          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-sky-400">
+            <MapPin className="w-3.5 h-3.5 text-sky-400" />
+            <span>{settings.ville}</span>
+          </div>
+
           {/* Database / Sync Badge */}
           <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800 text-xs">
             <span className={`w-2 h-2 rounded-full ${isSupabaseConfigured ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}`} />
